@@ -41,7 +41,7 @@ export default {
       const model = env.GEMINI_MODEL || 'gemini-3.8-flash';
       const g = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
-        body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) } }),
+        body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) + 1024, thinkingConfig: /gemini-3/.test(model) ? { thinkingLevel: 'low' } : undefined } }),
       });
       if (!g.ok) return json({ error: 'upstream', status: g.status }, 502);
       const gd = await g.json();

@@ -22,7 +22,7 @@ const clean = (messages) => {
 export async function askAI({ task = 'chat', messages, lang, profile = {}, context = '', params = {}, image = null }) {
   const c = cfg(); const msgs = clean(messages);
   if (!msgs.length) throw new Error('empty');
-  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), task === 'course' ? 60000 : 30000);
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), (task === 'course' || c.mode === 'gemini') ? 60000 : 30000);
   try {
     if (c.mode === 'proxy') {
       const res = await fetch(c.endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, signal: ctl.signal,
@@ -33,7 +33,7 @@ export async function askAI({ task = 'chat', messages, lang, profile = {}, conte
     if (c.mode === 'gemini') { // مفتاح Gemini مجاني شخصي، كيبقى فهاد الجهاز
       const contents = msgs.map((m, i) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: (image && i === msgs.length - 1) ? [{ inline_data: { mime_type: image.media_type, data: image.data } }, { text: m.content }] : [{ text: m.content }] }));
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.gmodel || DEFAULT.gmodel)}:generateContent`, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-goog-api-key': c.gkey },
-        body: JSON.stringify({ systemInstruction: { parts: [{ text: buildSystem(task, { lang, profile, context, params }) }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) } }) });
+        body: JSON.stringify({ systemInstruction: { parts: [{ text: buildSystem(task, { lang, profile, context, params }) }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) + 1024, thinkingConfig: /gemini-3/.test(c.gmodel || DEFAULT.gmodel) ? { thinkingLevel: 'low' } : undefined } }) });
       if (!res.ok) { let m = ''; try { m = ((await res.json()).error || {}).message || ''; } catch (e) { /* no body */ } throw new Error('HTTP ' + res.status + (m ? ' — ' + m.slice(0, 160) : '')); }
       const j = await res.json(); const text = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).map((p) => p.text || '').join('\n');
       if (!text) throw new Error('no text'); return text;
