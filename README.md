@@ -1,4 +1,9 @@
-# QUDRA AI 1.0
+# QUDRA AI 1.1
+
+**أسهل طريقة مجانية (بلا Worker):** فالتطبيق QUDRA OFFLINE ← الوضع «Gemini مجاني» ← لصق مفتاح من aistudio.google.com/apikey. المفتاح كيبقى فجهازك.
+
+**ذكاء مجاني:** الـ Worker كيدعم Google Gemini (مفتاح مجاني من aistudio.google.com/apikey): `wrangler secret put GEMINI_API_KEY`. إلا كان ANTHROPIC_API_KEY كيتستعمل هو بالأولوية.
+
 
 الوحدات: HUMAN (مساعد صوت+نص مع ذاكرة بموافقتك) · ACADEMY (+ كورسات يولّدها الذكاء) · MIND · INVENT · UNIVERSAL (ترجمة) · CAREER · WORLD (مشاركة عبر روابط) · LIFE MAP · OFFLINE · VISION.
 

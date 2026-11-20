@@ -1,6 +1,6 @@
 // QUDRA AI – Cloudflare Worker (proxy آمن لـ Anthropic API)
 // المفتاح سري فالخادم؛ الموقع كيبعث غير المهمة والرسائل، والـ prompts كتتبنى هنا.
-// النشر: wrangler secret put ANTHROPIC_API_KEY  &&  wrangler deploy
+// النشر: wrangler secret put GEMINI_API_KEY (مجاني) أو ANTHROPIC_API_KEY  &&  wrangler deploy
 // المتغيرات: ALLOWED_ORIGIN (مثلا https://mohamedrezzoug.github.io) ، MODEL (اختياري)
 import { buildSystem, maxTokens, TASKS } from '../js/prompts.js';
 
@@ -16,7 +16,7 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (req.method !== 'POST') return json({ error: 'method' }, 405);
     if (!ok) return json({ error: 'origin' }, 403);
-    if (!env.ANTHROPIC_API_KEY) return json({ error: 'server not configured' }, 500);
+    if (!env.ANTHROPIC_API_KEY && !env.GEMINI_API_KEY) return json({ error: 'server not configured' }, 500);
 
     const raw = await req.text();
     if (raw.length > 2200000) return json({ error: 'too large' }, 413);
@@ -35,6 +35,20 @@ export default {
       last.content = [{ type: 'image', source: { type: 'base64', media_type: img.media_type, data: img.data } }, { type: 'text', text: last.content }];
     }
     const system = buildSystem(task, { lang: body.lang, profile: body.profile, context: body.context, params: body.params });
+    if (!env.ANTHROPIC_API_KEY) { // مجاني: Google Gemini عبر AI Studio
+      const parts = (c) => (typeof c === 'string' ? [{ text: c }] : c.map((p) => (p.type === 'image' ? { inline_data: { mime_type: p.source.media_type, data: p.source.data } } : { text: p.text })));
+      const contents = messages.map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: parts(m.content) }));
+      const model = env.GEMINI_MODEL || 'gemini-2.5-flash';
+      const g = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
+        body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) } }),
+      });
+      if (!g.ok) return json({ error: 'upstream', status: g.status }, 502);
+      const gd = await g.json();
+      const gt = ((gd.candidates && gd.candidates[0] && gd.candidates[0].content && gd.candidates[0].content.parts) || []).map((p) => p.text || '').join('\n');
+      if (!gt) return json({ error: 'empty' }, 502);
+      return json({ text: gt });
+    }
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },

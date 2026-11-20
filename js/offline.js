@@ -42,9 +42,10 @@ export const deferred = { ev: null };
 
 export function aiCard() {
   const c = AI.cfg(); const msgEl = h('p', { class: 'fb' }); const save = (patch) => { Object.assign(c, patch); AI.saveCfg(c); };
-  const mode = h('select', { onchange: (e) => { save({ mode: e.target.value }); hooks.render(); } }, [['off', 'ai_off'], ['proxy', 'ai_proxy'], ['key', 'ai_key']].map(([v, k]) => h('option', { value: v, selected: c.mode === v }, tr(k))));
+  const mode = h('select', { onchange: (e) => { save({ mode: e.target.value }); hooks.render(); } }, [['off', 'ai_off'], ['gemini', 'ai_gemini'], ['proxy', 'ai_proxy'], ['key', 'ai_key']].map(([v, k]) => h('option', { value: v, selected: c.mode === v }, tr(k))));
   const fields = [];
   if (c.mode === 'proxy') fields.push(h('label', { class: 'fl' }, tr('ai_endpoint'), h('input', { dir: 'ltr', value: c.endpoint, placeholder: 'https://qudra-ai-proxy.xxx.workers.dev', oninput: (e) => save({ endpoint: e.target.value.trim() }) })));
+  if (c.mode === 'gemini') fields.push(h('label', { class: 'fl' }, tr('ai_gkey'), h('input', { dir: 'ltr', type: 'password', autocomplete: 'off', value: c.gkey, placeholder: 'AIza…', oninput: (e) => save({ gkey: e.target.value.trim() }) })), h('p', { class: 'muted small' }, _('مفتاح مجاني من aistudio.google.com/apikey. كيبقى فهاد الجهاز فقط.', 'Clé gratuite sur aistudio.google.com/apikey. Reste sur cet appareil.', 'Free key from aistudio.google.com/apikey. Stays on this device only.')));
   if (c.mode === 'key') fields.push(h('label', { class: 'fl' }, tr('ai_key'), h('input', { dir: 'ltr', type: 'password', autocomplete: 'off', value: c.key, placeholder: tr('ai_keyph'), oninput: (e) => save({ key: e.target.value.trim() }) })), h('label', { class: 'fl' }, tr('ai_model'), h('input', { dir: 'ltr', value: c.model, oninput: (e) => save({ model: e.target.value.trim() }) })));
   const test = c.mode !== 'off' && btn(tr('ai_test'), async () => { msgEl.className = 'fb'; msgEl.textContent = tr('ai_thinking');
     try { await AI.askAI({ task: 'chat', messages: [{ role: 'user', content: 'ping: reply with the single word OK' }], lang: st().lang, profile: {} }); msgEl.className = 'fb ok'; msgEl.textContent = tr('ai_ok'); } catch (e) { msgEl.className = 'fb bad'; msgEl.textContent = tr('ai_fail'); } }, 'ghost');

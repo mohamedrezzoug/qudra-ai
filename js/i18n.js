@@ -188,6 +188,8 @@ const S = {
   ai_key: { ar: 'مفتاح شخصي (Anthropic)', fr: 'Clé personnelle (Anthropic)', en: 'Personal key (Anthropic)' },
   ai_endpoint: { ar: 'رابط الـ Worker', fr: 'URL du Worker', en: 'Worker URL' },
   ai_keyph: { ar: 'sk-ant-… (كيبقى فهاد الجهاز فقط)', fr: 'sk-ant-… (reste sur cet appareil)', en: 'sk-ant-… (stays on this device only)' },
+  ai_gemini: { ar: 'Gemini مجاني (مفتاح شخصي)', fr: 'Gemini gratuit (clé perso)', en: 'Free Gemini (personal key)' },
+  ai_gkey: { ar: 'مفتاح Gemini', fr: 'Clé Gemini', en: 'Gemini key' },
   ai_model: { ar: 'النموذج', fr: 'Modèle', en: 'Model' },
   ai_test: { ar: 'جرّب الاتصال', fr: 'Tester la connexion', en: 'Test connection' },
   ai_ok: { ar: 'الاتصال خدام ✅', fr: 'Connexion OK ✅', en: 'Connection works ✅' },
