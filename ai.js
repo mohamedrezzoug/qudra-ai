@@ -33,7 +33,7 @@ export async function askAI({ task = 'chat', messages, lang, profile = {}, conte
     if (c.mode === 'gemini') { // مفتاح Gemini مجاني شخصي؛ إعادة المحاولة + نماذج بديلة عند الضغط
       const contents = msgs.map((m, k) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: (image && k === msgs.length - 1) ? [{ inline_data: { mime_type: image.media_type, data: image.data } }, { text: m.content }] : [{ text: m.content }] }));
       const system = buildSystem(task, { lang, profile, context, params });
-      const models = [...new Set([c.gmodel || DEFAULT.gmodel, 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest', 'gemini-flash-lite-latest'])];
+      const models = [...new Set([c.gmodel || DEFAULT.gmodel, 'gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite'])];
       let lastErr = new Error('failed');
       for (let n = 0; n < models.length; n++) {
         const model = models[n];
