@@ -22,7 +22,7 @@ const clean = (messages) => {
 export async function askAI({ task = 'chat', messages, lang, profile = {}, context = '', params = {}, image = null }) {
   const c = cfg(); const msgs = clean(messages);
   if (!msgs.length) throw new Error('empty');
-  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), (task === 'course' || c.mode === 'gemini') ? 60000 : 30000);
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), (task === 'course' || c.mode === 'gemini') ? 90000 : 30000);
   try {
     if (c.mode === 'proxy') {
       const res = await fetch(c.endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, signal: ctl.signal,
@@ -30,13 +30,26 @@ export async function askAI({ task = 'chat', messages, lang, profile = {}, conte
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const j = await res.json(); if (!j.text) throw new Error('no text'); return String(j.text);
     }
-    if (c.mode === 'gemini') { // مفتاح Gemini مجاني شخصي، كيبقى فهاد الجهاز
-      const contents = msgs.map((m, i) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: (image && i === msgs.length - 1) ? [{ inline_data: { mime_type: image.media_type, data: image.data } }, { text: m.content }] : [{ text: m.content }] }));
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.gmodel || DEFAULT.gmodel)}:generateContent`, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-goog-api-key': c.gkey },
-        body: JSON.stringify({ systemInstruction: { parts: [{ text: buildSystem(task, { lang, profile, context, params }) }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) + 1024, thinkingConfig: /gemini-3/.test(c.gmodel || DEFAULT.gmodel) ? { thinkingLevel: 'low' } : undefined } }) });
-      if (!res.ok) { let m = ''; try { m = ((await res.json()).error || {}).message || ''; } catch (e) { /* no body */ } throw new Error('HTTP ' + res.status + (m ? ' — ' + m.slice(0, 160) : '')); }
-      const j = await res.json(); const text = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).map((p) => p.text || '').join('\n');
-      if (!text) throw new Error('no text'); return text;
+    if (c.mode === 'gemini') { // مفتاح Gemini مجاني شخصي؛ إعادة المحاولة + نماذج بديلة عند الضغط
+      const contents = msgs.map((m, k) => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: (image && k === msgs.length - 1) ? [{ inline_data: { mime_type: image.media_type, data: image.data } }, { text: m.content }] : [{ text: m.content }] }));
+      const system = buildSystem(task, { lang, profile, context, params });
+      const models = [...new Set([c.gmodel || DEFAULT.gmodel, 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest', 'gemini-flash-lite-latest'])];
+      let lastErr = new Error('failed');
+      for (let n = 0; n < models.length; n++) {
+        const model = models[n];
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, { method: 'POST', signal: ctl.signal, headers: { 'content-type': 'application/json', 'x-goog-api-key': c.gkey },
+          body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig: { maxOutputTokens: maxTokens(task) + 1024, thinkingConfig: /gemini-3/.test(model) ? { thinkingLevel: 'low' } : undefined } }) });
+        if (res.ok) {
+          const j = await res.json(); const text = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).map((p) => p.text || '').join('\n');
+          if (text) { if (n > 0) c.lastModel = model; return text; }
+          lastErr = new Error('no text (' + model + ')'); continue;
+        }
+        let m = ''; try { m = ((await res.json()).error || {}).message || ''; } catch (e) { /* no body */ }
+        lastErr = new Error('HTTP ' + res.status + ' [' + model + ']' + (m ? ' — ' + m.slice(0, 120) : ''));
+        if (![404, 429, 500, 503].includes(res.status)) throw lastErr; // مفتاح خاطئ الخ: ما كاين لا إعادة لا بديل
+        if (res.status === 503 && n === 0) await new Promise((r) => setTimeout(r, 1500));
+      }
+      throw lastErr;
     }
     if (image) { const last = msgs[msgs.length - 1]; last.content = [{ type: 'image', source: { type: 'base64', media_type: image.media_type, data: image.data } }, { type: 'text', text: last.content }]; }
     const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', signal: ctl.signal,
