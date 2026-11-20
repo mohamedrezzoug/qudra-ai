@@ -1,0 +1,17 @@
+{
+  "name": "QUDRA AI – قُدرة",
+  "short_name": "QUDRA",
+  "description": "مساعد ذكي مجاني لتعلم المهارات وتحويل الأفكار إلى إنجازات",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "ar",
+  "dir": "rtl",
+  "background_color": "#070a1f",
+  "theme_color": "#070a1f",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

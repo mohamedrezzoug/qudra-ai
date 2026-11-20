@@ -1,0 +1,172 @@
+// QUDRA AI – محتوى تعليمي ثلاثي اللغات (ar / fr / en)
+import { CODE_EXTRA, NEW_SKILLS } from './content2.js';
+import { MORE_SKILLS } from './content3.js';
+export const SKILLS = [
+  {
+    id: 'code', icon: '💻', color: '#4cc9f0',
+    name: { ar: 'البرمجة من الصفر', fr: 'Programmation dès zéro', en: 'Programming from scratch' },
+    desc: { ar: 'افهم كيف كتخدم البرامج وصاوب أول صفحة ويب ديالك.', fr: 'Comprends comment fonctionnent les programmes et crée ta première page web.', en: 'Understand how programs work and build your first web page.' },
+    kw: ['code', 'program', 'برمج', 'تطبيق', 'app', 'web', 'dev', 'كود', 'موقع'],
+    lessons: [
+      { id: 'code1',
+        t: { ar: 'شنو هو البرنامج؟', fr: "Qu'est-ce qu'un programme ?", en: 'What is a program?' },
+        body: { ar: 'البرنامج هو سلسلة خطوات واضحة كتفهمها الآلة. هاد السلسلة سميتها «خوارزمية». مثلا: وصفة الطاجين خوارزمية: كتبدا بالمقادير، من بعد الطبخ، من بعد التقديم. الحاسوب ما كيفهمش «شوية» ولا «تقريبا»، خاصك تعطيه خطوات دقيقة.', fr: "Un programme est une suite d'étapes précises qu'une machine comprend : c'est un algorithme. Une recette de tajine en est un : ingrédients, cuisson, service. L'ordinateur ne comprend ni « un peu » ni « environ » : il faut être exact.", en: 'A program is a sequence of precise steps a machine can follow: an algorithm. A tagine recipe is one: ingredients, cooking, serving. Computers do not understand "a bit" or "roughly"; you must be exact.' },
+        ex: { ar: 'كتب فورقة 5 خطوات دقيقة باش تحضر كأس أتاي.', fr: 'Écris sur une feuille 5 étapes précises pour préparer un verre de thé.', en: 'Write 5 precise steps on paper to make a glass of tea.' },
+        q: { q: { ar: 'شنو هي الخوارزمية؟', fr: "Qu'est-ce qu'un algorithme ?", en: 'What is an algorithm?' }, o: [{ ar: 'سلسلة خطوات دقيقة', fr: "Suite d'étapes précises", en: 'A sequence of precise steps' }, { ar: 'نوع د الحاسوب', fr: "Un type d'ordinateur", en: 'A type of computer' }, { ar: 'لغة أجنبية', fr: 'Une langue étrangère', en: 'A foreign language' }], a: 0 } },
+      { id: 'code2',
+        t: { ar: 'المتغيرات والشروط', fr: 'Variables et conditions', en: 'Variables and conditions' },
+        body: { ar: 'المتغير هو علبة كنحط فيها قيمة ونسميوها: age = 18. الشرط كيخلي البرنامج ياخد قرار: إلا كان العمر 18 أو أكثر، قول «مرحبا»، وإلا قول «كبر شوية». هاد جوج أفكار كيبنيو 90% د البرامج.', fr: "Une variable est une boîte qui contient une valeur : age = 18. Une condition permet de décider : si l'âge est ≥ 18, dire « bienvenue », sinon « reviens plus tard ». Ces deux idées forment 90 % des programmes.", en: 'A variable is a box holding a value: age = 18. A condition lets the program decide: if age is 18 or more, say "welcome", otherwise "come back later". These two ideas make up most programs.' },
+        code: 'let age = 18;\nif (age >= 18) {\n  console.log("Welcome");\n} else {\n  console.log("Come back later");\n}',
+        ex: { ar: 'بدل قيمة age ل 15 وشوف شنو غادي يطلع.', fr: 'Change age en 15 et devine le résultat.', en: 'Change age to 15 and predict the result.' },
+        q: { q: { ar: 'شنو كيدير الشرط (if)؟', fr: 'À quoi sert un « if » ?', en: 'What does an "if" do?' }, o: [{ ar: 'كيخلي البرنامج ياخد قرار', fr: 'Il permet au programme de décider', en: 'Lets the program make a decision' }, { ar: 'كيمسح الملفات', fr: 'Il supprime des fichiers', en: 'Deletes files' }, { ar: 'كيسرّع الإنترنت', fr: "Il accélère Internet", en: 'Speeds up the internet' }], a: 0 } },
+      { id: 'code3',
+        t: { ar: 'أول صفحة ويب ديالك', fr: 'Ta première page web', en: 'Your first web page' },
+        body: { ar: 'صفحة الويب كتتكون من HTML (الهيكل). كتب الكود جوا ملف سميتو index.html وفتحو فالمتصفح. بهاد الطريقة كتصاوب أول مشروع حقيقي ديالك وتقدر تنشرو بالمجان على GitHub Pages.', fr: "Une page web est faite de HTML (la structure). Écris le code dans un fichier index.html et ouvre-le dans le navigateur. Tu as ainsi un vrai premier projet, publiable gratuitement sur GitHub Pages.", en: 'A web page is built with HTML (the structure). Write the code in a file called index.html and open it in your browser. That is a real first project you can publish free on GitHub Pages.' },
+        code: '<!DOCTYPE html>\n<html>\n  <body>\n    <h1>Salam, I am Sara</h1>\n    <p>This is my first page.</p>\n  </body>\n</html>',
+        ex: { ar: 'عوّض «Sara» بسميتك وزيد فقرة تعرّف بيها بنفسك.', fr: 'Remplace « Sara » par ton prénom et ajoute un paragraphe de présentation.', en: 'Replace "Sara" with your name and add a paragraph about you.' },
+        q: { q: { ar: 'شنو كيمثل HTML؟', fr: 'Que représente le HTML ?', en: 'What does HTML represent?' }, o: [{ ar: 'هيكل الصفحة', fr: 'La structure de la page', en: 'The page structure' }, { ar: 'كلمة السر', fr: 'Le mot de passe', en: 'The password' }, { ar: 'الصور فقط', fr: 'Seulement les images', en: 'Only images' }], a: 0 } },
+    ],
+  },
+  {
+    id: 'time', icon: '⏱️', color: '#ffd166',
+    name: { ar: 'التنظيم وإدارة الوقت', fr: 'Organisation et gestion du temps', en: 'Organisation and time management' },
+    desc: { ar: 'ركز على اللي مهم وخدم بدون ضغط.', fr: "Concentre-toi sur l'essentiel et travaille sans stress.", en: 'Focus on what matters and work without stress.' },
+    kw: ['time', 'temps', 'وقت', 'تنظيم', 'organis', 'productiv', 'étude', 'study', 'دراسة'],
+    lessons: [
+      { id: 'time1',
+        t: { ar: 'مصفوفة أيزنهاور', fr: "La matrice d'Eisenhower", en: 'The Eisenhower matrix' },
+        body: { ar: 'قسم مهامك على 4: مهم وعاجل (دير دابا)، مهم ماشي عاجل (جدولو)، عاجل ماشي مهم (فوّضو)، لا مهم لا عاجل (حيدو). غالبا النجاح كيجي من «مهم ماشي عاجل».', fr: "Classe tes tâches en 4 : important et urgent (fais-le), important non urgent (planifie), urgent non important (délègue), ni l'un ni l'autre (supprime). Le progrès vient souvent de « important non urgent ».", en: 'Sort tasks into 4: important and urgent (do now), important not urgent (schedule), urgent not important (delegate), neither (drop). Real progress usually lives in "important, not urgent".' },
+        ex: { ar: 'كتب 6 مهام د هاد الأسبوع وصنفها.', fr: 'Écris 6 tâches de la semaine et classe-les.', en: "List 6 tasks for this week and classify them." },
+        q: { q: { ar: 'مهمة مهمة ماشي عاجلة: شنو ندير؟', fr: 'Tâche importante mais non urgente : que faire ?', en: 'Important but not urgent task: what to do?' }, o: [{ ar: 'نجدولها', fr: 'La planifier', en: 'Schedule it' }, { ar: 'نحيدها', fr: 'La supprimer', en: 'Drop it' }, { ar: 'نفوضها دايما', fr: 'La déléguer toujours', en: 'Always delegate it' }], a: 0 } },
+      { id: 'time2',
+        t: { ar: 'تقنية بومودورو', fr: 'La technique Pomodoro', en: 'The Pomodoro technique' },
+        body: { ar: 'خدم 25 دقيقة بتركيز كامل، من بعد استراحة 5 دقايق. من بعد 4 دورات ريّح 20 دقيقة. الدماغ كيحب الأهداف الصغيرة والواضحة.', fr: 'Travaille 25 minutes à fond, puis 5 minutes de pause. Après 4 cycles, 20 minutes de repos. Le cerveau aime les objectifs courts et clairs.', en: 'Work 25 focused minutes, then rest 5. After 4 rounds, rest 20. The brain loves short, clear goals.' },
+        ex: { ar: 'دير دورة وحدة دابا بلا تلفون حدّاك.', fr: 'Fais un cycle maintenant, téléphone loin de toi.', en: 'Do one round now with your phone out of reach.' },
+        q: { q: { ar: 'شحال د الدقايق فدورة العمل؟', fr: 'Durée du bloc de travail ?', en: 'Length of a work block?' }, o: [{ ar: '25', fr: '25', en: '25' }, { ar: '60', fr: '60', en: '60' }, { ar: '5', fr: '5', en: '5' }], a: 0 } },
+      { id: 'time3',
+        t: { ar: 'أولوية واحدة فاليوم', fr: 'Une priorité par jour', en: 'One priority a day' },
+        body: { ar: 'كل صباح اختار «الشيء الوحيد» اللي إلا درتيه نهار ديالك يكون ناجح. دير ليه الوقت الأول، قبل الرسائل والتصفح.', fr: "Chaque matin, choisis « la seule chose » qui rend ta journée réussie. Fais-la en premier, avant messages et réseaux.", en: 'Each morning pick the one thing that makes your day a success. Do it first, before messages and browsing.' },
+        ex: { ar: 'اختار أولويتك ديال غدا وكتبها دابا.', fr: 'Choisis ta priorité de demain et écris-la maintenant.', en: "Pick tomorrow's priority and write it down now." },
+        q: { q: { ar: 'فاش الأحسن نديرو الأولوية؟', fr: 'Quand faire la priorité ?', en: 'When to do the priority?' }, o: [{ ar: 'فالأول', fr: "En premier", en: 'First' }, { ar: 'فاللخر', fr: 'En dernier', en: 'Last' }, { ar: 'إلا بقى الوقت', fr: "S'il reste du temps", en: 'If time remains' }], a: 0 } },
+    ],
+  },
+  {
+    id: 'money', icon: '💰', color: '#06d6a0',
+    name: { ar: 'الثقافة المالية', fr: 'Culture financière', en: 'Financial literacy' },
+    desc: { ar: 'ميزانية، ادخار، وفهم الأساسيات.', fr: 'Budget, épargne et bases à comprendre.', en: 'Budget, saving and the basics.' },
+    kw: ['money', 'argent', 'فلوس', 'مال', 'budget', 'ميزانية', 'ادخار', 'épargne', 'saving'],
+    lessons: [
+      { id: 'money1',
+        t: { ar: 'قاعدة 50/30/20', fr: 'La règle 50/30/20', en: 'The 50/30/20 rule' },
+        body: { ar: '50% د الدخل للحاجيات (كراء، أكل، نقل)، 30% للرغبات، 20% للادخار. هي نقطة بداية كتعدلها على حسب وضعيتك.', fr: '50 % du revenu pour les besoins (loyer, repas, transport), 30 % pour les envies, 20 % pour l\'épargne. C\'est un point de départ à adapter.', en: '50% of income for needs (rent, food, transport), 30% for wants, 20% for savings. It is a starting point to adapt.' },
+        ex: { ar: 'حسب 20% من دخلك الشهري.', fr: 'Calcule 20 % de ton revenu mensuel.', en: 'Compute 20% of your monthly income.' },
+        q: { q: { ar: 'شحال كتمثل الادخار فالقاعدة؟', fr: "Part de l'épargne ?", en: 'Savings share?' }, o: [{ ar: '20%', fr: '20 %', en: '20%' }, { ar: '50%', fr: '50 %', en: '50%' }, { ar: '5%', fr: '5 %', en: '5%' }], a: 0 } },
+      { id: 'money2',
+        t: { ar: 'صندوق الطوارئ', fr: "Fonds d'urgence", en: 'Emergency fund' },
+        body: { ar: 'مبلغ محطوط جنب كيغطي 3 حتى 6 شهور د المصاريف الأساسية. كيحميك من الديون فوقت الأزمات.', fr: "Une somme de côté couvrant 3 à 6 mois de dépenses essentielles. Elle t'évite de t'endetter en cas de coup dur.", en: 'Money set aside covering 3 to 6 months of essential costs. It protects you from debt in a crisis.' },
+        ex: { ar: 'حسب المصاريف الأساسية د شهر واحد.', fr: "Calcule tes dépenses essentielles d'un mois.", en: 'Work out one month of essential spending.' },
+        q: { q: { ar: 'علاش صندوق الطوارئ؟', fr: "Pourquoi un fonds d'urgence ?", en: 'Why an emergency fund?' }, o: [{ ar: 'يحميك من الديون فالأزمات', fr: 'Éviter la dette en cas de crise', en: 'Avoid debt in a crisis' }, { ar: 'باش نشري الكماليات', fr: 'Acheter du superflu', en: 'Buy extras' }, { ar: 'ما فيه فايدة', fr: "Aucune utilité", en: 'No use' }], a: 0 } },
+      { id: 'money3',
+        t: { ar: 'التضخم والادخار', fr: 'Inflation et épargne', en: 'Inflation and saving' },
+        body: { ar: 'التضخم معناه الأسعار كتزيد مع الوقت، يعني نفس الفلوس كتشري أقل. علاش خاصك تعرف الخيارات قبل ما تقرر. هادشي تعليم عام ماشي نصيحة استثمارية، وللقرارات الكبار شاور مختص.', fr: "L'inflation fait monter les prix : la même somme achète moins. Il faut donc connaître les options avant de décider. Contenu éducatif, pas un conseil d'investissement ; consulte un professionnel pour les grosses décisions.", en: 'Inflation raises prices over time, so the same money buys less. Know your options before deciding. This is general education, not investment advice; ask a professional for big decisions.' },
+        ex: { ar: 'قارن ثمن ديال حاجة بسيطة عاد وقبل 5 سنين.', fr: "Compare le prix d'un produit courant aujourd'hui et il y a 5 ans.", en: 'Compare the price of a common item today vs 5 years ago.' },
+        q: { q: { ar: 'شنو كيدير التضخم؟', fr: "Effet de l'inflation ?", en: 'Effect of inflation?' }, o: [{ ar: 'كيقلل القدرة الشرائية', fr: "Réduit le pouvoir d'achat", en: 'Reduces purchasing power' }, { ar: 'كينقص الأسعار', fr: 'Baisse les prix', en: 'Lowers prices' }, { ar: 'ما كيأثر', fr: 'Aucun effet', en: 'No effect' }], a: 0 } },
+    ],
+  },
+  {
+    id: 'talk', icon: '🗣️', color: '#f72585',
+    name: { ar: 'التواصل والإقناع', fr: 'Communication et persuasion', en: 'Communication and persuasion' },
+    desc: { ar: 'سمع مزيان، عبر بوضوح، وتعامل مع الاختلاف.', fr: "Écoute bien, exprime-toi clairement, gère les désaccords.", en: 'Listen well, speak clearly, handle disagreement.' },
+    kw: ['talk', 'communic', 'تواصل', 'parler', 'confiance', 'ثقة', 'speak', 'إقناع'],
+    lessons: [
+      { id: 'talk1',
+        t: { ar: 'الاستماع الفعّال', fr: 'Écoute active', en: 'Active listening' },
+        body: { ar: 'سمع باش تفهم ماشي باش تجاوب. عاود بكلامك شنو سمعتي («إذن بغيتي تقول…») وسول سؤال مفتوح. الناس كيحبو اللي كيفهمهم.', fr: "Écoute pour comprendre, pas pour répondre. Reformule (« Donc tu veux dire… ») et pose une question ouverte.", en: 'Listen to understand, not to reply. Rephrase ("So you mean…") and ask an open question.' },
+        ex: { ar: 'فالمحادثة الجاية، عاود جملة د الشخص الآخر قبل ما تجاوب.', fr: "Dans ta prochaine conversation, reformule avant de répondre.", en: 'In your next conversation, rephrase before answering.' },
+        q: { q: { ar: 'شنو الهدف د الاستماع الفعّال؟', fr: "But de l'écoute active ?", en: 'Goal of active listening?' }, o: [{ ar: 'الفهم', fr: 'Comprendre', en: 'To understand' }, { ar: 'الرد بسرعة', fr: 'Répondre vite', en: 'To reply fast' }, { ar: 'الفوز بالنقاش', fr: 'Gagner le débat', en: 'To win' }], a: 0 } },
+      { id: 'talk2',
+        t: { ar: 'رسالة واضحة: السياق، الفكرة، الطلب', fr: 'Message clair : contexte, idée, demande', en: 'Clear message: context, point, ask' },
+        body: { ar: 'ابدا بالسياق (علاش كنهضر)، من بعد الفكرة الرئيسية، من بعد الطلب الواضح. «بالنسبة للمشروع… الجدول متأخر… واش نقدرو نتلاقاو غدا؟»', fr: "Commence par le contexte, puis l'idée principale, puis la demande claire.", en: 'Start with context, then the main point, then a clear ask.' },
+        ex: { ar: 'عاود صياغة رسالة قديمة بهاد الشكل.', fr: 'Réécris un ancien message avec cette structure.', en: 'Rewrite an old message in this structure.' },
+        q: { q: { ar: 'آخر عنصر فالرسالة الواضحة؟', fr: 'Dernier élément ?', en: 'Last element?' }, o: [{ ar: 'الطلب', fr: 'La demande', en: 'The ask' }, { ar: 'السياق', fr: 'Le contexte', en: 'The context' }, { ar: 'النكتة', fr: 'La blague', en: 'The joke' }], a: 0 } },
+      { id: 'talk3',
+        t: { ar: 'كيفاش تتعامل مع الاختلاف', fr: 'Gérer un désaccord', en: 'Handling disagreement' },
+        body: { ar: 'فرّق بين الشخص والفكرة. قول: «فهمت وجهة نظرك، وأنا كنشوف…». ركز على الحل المشترك ماشي على من اللي غالب.', fr: "Sépare la personne de l'idée. Dis : « Je comprends ton point de vue, et moi je vois… ». Vise la solution commune.", en: 'Separate the person from the idea. Say "I see your view, and I see…". Aim for a shared solution.' },
+        ex: { ar: 'فكر فنقاش ديال قريب وكتب جملة بهاد الصيغة.', fr: 'Pense à un désaccord récent et écris une phrase de ce type.', en: 'Think of a recent disagreement and write such a sentence.' },
+        q: { q: { ar: 'فالاختلاف نركز على…', fr: 'En désaccord, se concentrer sur…', en: 'In disagreement, focus on…' }, o: [{ ar: 'حل مشترك', fr: 'Une solution commune', en: 'A shared solution' }, { ar: 'الانتصار', fr: 'La victoire', en: 'Winning' }, { ar: 'الصمت', fr: 'Le silence', en: 'Silence' }], a: 0 } },
+    ],
+  },
+  {
+    id: 'ai', icon: '🤖', color: '#9b5de5',
+    name: { ar: 'استعمال الذكاء الاصطناعي بذكاء', fr: "Bien utiliser l'IA", en: 'Using AI wisely' },
+    desc: { ar: 'اسول مزيان، تحقق من الجواب، وتعلم ماشي تنسخ.', fr: 'Pose de bonnes questions, vérifie, apprends au lieu de copier.', en: 'Ask well, verify, learn instead of copying.' },
+    kw: ['ai', 'ia', 'ذكاء', 'prompt', 'chatgpt', 'claude', 'intelligence'],
+    lessons: [
+      { id: 'ai1',
+        t: { ar: 'سؤال جيد = جواب جيد', fr: 'Bonne question = bonne réponse', en: 'Good question = good answer' },
+        body: { ar: 'استعمل 4 عناصر: الدور («نتا مدرس»)، السياق (مستواي)، الهدف (شنو بغيت)، الشكل (جدول، 5 نقاط). كل ما كان الطلب أوضح، الجواب كيكون أحسن.', fr: "Utilise 4 éléments : rôle, contexte, objectif, format. Plus la demande est claire, meilleure est la réponse.", en: 'Use 4 elements: role, context, goal, format. The clearer the request, the better the answer.' },
+        ex: { ar: 'كتب طلب بهاد العناصر الأربعة على موضوع بغيتي تتعلمو.', fr: 'Écris une demande avec ces 4 éléments sur un sujet à apprendre.', en: 'Write a request with these 4 elements about a topic to learn.' },
+        q: { q: { ar: 'شنو عنصر من العناصر الأربعة؟', fr: 'Quel est un des 4 éléments ?', en: 'Which is one of the 4 elements?' }, o: [{ ar: 'الهدف', fr: "L'objectif", en: 'The goal' }, { ar: 'اللون', fr: 'La couleur', en: 'The colour' }, { ar: 'الحظ', fr: 'La chance', en: 'Luck' }], a: 0 } },
+      { id: 'ai2',
+        t: { ar: 'تحقق قبل ما تثق', fr: 'Vérifie avant de croire', en: 'Verify before trusting' },
+        body: { ar: 'الذكاء الاصطناعي ممكن يغلط ويكون واثق. تأكد من المعلومات المهمة (أرقام، قوانين، صحة) فمصدر رسمي ثاني.', fr: "L'IA peut se tromper avec assurance. Vérifie les infos importantes (chiffres, lois, santé) dans une source officielle.", en: 'AI can be confidently wrong. Check important facts (numbers, laws, health) in an official source.' },
+        ex: { ar: 'خد معلومة من جواب وتحقق منها فمصدر رسمي.', fr: 'Prends une info et vérifie-la dans une source officielle.', en: 'Take one claim and verify it in an official source.' },
+        q: { q: { ar: 'المعلومات الحساسة خاصها…', fr: 'Les infos sensibles doivent être…', en: 'Sensitive info must be…' }, o: [{ ar: 'تتأكد من مصدر رسمي', fr: 'Vérifiées en source officielle', en: 'Verified in an official source' }, { ar: 'تتصدق مباشرة', fr: 'Crues directement', en: 'Trusted directly' }, { ar: 'تتحيد', fr: 'Ignorées', en: 'Ignored' }], a: 0 } },
+      { id: 'ai3',
+        t: { ar: 'تعلم، ماشي نسخ', fr: 'Apprendre, pas copier', en: 'Learn, do not copy' },
+        body: { ar: 'خلي الذكاء الاصطناعي يشرح ليك ويصحح ليك، من بعد عاود دير الخدمة بوحدك. القدرة الحقيقية هي اللي كتبقى فيك.', fr: "Demande à l'IA d'expliquer et corriger, puis refais seul. La vraie capacité est celle qui reste en toi.", en: 'Let AI explain and correct you, then redo the work yourself. Real capability is what stays with you.' },
+        ex: { ar: 'خلي الذكاء الاصطناعي يشرح ليك تمرين وعاود حلو بوحدك.', fr: "Fais expliquer un exercice par l'IA puis refais-le seul.", en: 'Have AI explain an exercise, then solve it again alone.' },
+        q: { q: { ar: 'شنو الأحسن؟', fr: 'Le mieux ?', en: 'Best approach?' }, o: [{ ar: 'نفهم ونعاود بوحدي', fr: 'Comprendre puis refaire seul', en: 'Understand and redo alone' }, { ar: 'ننسخ مباشرة', fr: 'Copier directement', en: 'Copy directly' }, { ar: 'ما نتعلم والو', fr: 'Ne rien apprendre', en: 'Learn nothing' }], a: 0 } },
+    ],
+  },
+];
+
+SKILLS.find((k) => k.id === 'code').lessons.push(...CODE_EXTRA);
+SKILLS.push(...NEW_SKILLS, ...MORE_SKILLS);
+
+export const DECKS = [
+  { id: 'en', icon: '🇬🇧', name: { ar: 'الإنجليزية الأساسية', fr: 'Anglais de base', en: 'Basic English' }, speak: 'en-US', words: [
+    ['hello', 'مرحبا', 'bonjour'], ['thank you', 'شكرا', 'merci'], ['water', 'ماء', 'eau'], ['book', 'كتاب', 'livre'],
+    ['friend', 'صديق', 'ami'], ['work', 'عمل', 'travail'], ['learn', 'تعلّم', 'apprendre'], ['tomorrow', 'غدا', 'demain'],
+    ['family', 'عائلة', 'famille'], ['house', 'منزل', 'maison'], ['food', 'طعام', 'nourriture'], ['time', 'وقت', 'temps'],
+    ['goal', 'هدف', 'objectif'], ['help', 'مساعدة', 'aide'], ['think', 'فكّر', 'penser'], ['create', 'أنشأ', 'créer'],
+  ] },
+  { id: 'fr', icon: '🇫🇷', name: { ar: 'الفرنسية الأساسية', fr: 'Français de base', en: 'Basic French' }, speak: 'fr-FR', words: [
+    ['bonjour', 'مرحبا', 'hello'], ['merci', 'شكرا', 'thank you'], ['eau', 'ماء', 'water'], ['livre', 'كتاب', 'book'],
+    ['ami', 'صديق', 'friend'], ['travail', 'عمل', 'work'], ['apprendre', 'تعلّم', 'to learn'], ['demain', 'غدا', 'tomorrow'],
+    ['famille', 'عائلة', 'family'], ['maison', 'منزل', 'house'], ['nourriture', 'طعام', 'food'], ['temps', 'وقت', 'time'],
+    ['objectif', 'هدف', 'goal'], ['aide', 'مساعدة', 'help'], ['penser', 'فكّر', 'to think'], ['créer', 'أنشأ', 'to create'],
+  ] },
+  { id: 'tech', icon: '⚙️', name: { ar: 'كلمات تقنية', fr: 'Mots techniques', en: 'Tech words' }, speak: 'en-US', words: [
+    ['data', 'بيانات', 'données'], ['network', 'شبكة', 'réseau'], ['password', 'كلمة المرور', 'mot de passe'], ['code', 'كود', 'code'],
+    ['file', 'ملف', 'fichier'], ['update', 'تحديث', 'mise à jour'], ['browser', 'متصفح', 'navigateur'], ['server', 'خادم', 'serveur'],
+    ['search', 'بحث', 'recherche'], ['download', 'تحميل', 'télécharger'],
+  ] },
+];
+
+export const PUZZLES = [
+  { q: { ar: 'مضرب وكرة ثمنهم 1.10 درهم. المضرب بـ 1 درهم أغلى من الكرة. شحال ثمن الكرة؟', fr: 'Une raquette et une balle coûtent 1,10. La raquette coûte 1 de plus que la balle. Prix de la balle ?', en: 'A bat and a ball cost 1.10. The bat costs 1 more than the ball. Price of the ball?' }, o: ['0.10', '0.05', '0.15'], a: 1, e: { ar: 'إلا كانت الكرة 0.05 المضرب 1.05 والمجموع 1.10.', fr: 'Balle 0,05 → raquette 1,05 → total 1,10.', en: 'Ball 0.05 → bat 1.05 → total 1.10.' } },
+  { q: { ar: '5 آلات كتصاوب 5 قطع فـ 5 دقايق. شحال من وقت خاصها 100 آلة باش تصاوب 100 قطعة؟', fr: '5 machines font 5 pièces en 5 min. Combien de minutes pour 100 machines et 100 pièces ?', en: '5 machines make 5 items in 5 min. How long for 100 machines to make 100 items?' }, o: ['100', '5', '20'], a: 1, e: { ar: 'كل آلة كتصاوب قطعة فـ 5 دقايق.', fr: 'Chaque machine fait 1 pièce en 5 min.', en: 'Each machine makes 1 item in 5 min.' } },
+  { q: { ar: 'نبتة كتضاعف مساحتها كل نهار وكتغطي البحيرة فـ 48 يوم. فأي يوم كتغطي النص؟', fr: "Une plante double chaque jour et couvre le lac en 48 jours. Quel jour couvre-t-elle la moitié ?", en: 'A plant doubles daily and covers a lake in 48 days. On which day is it half covered?' }, o: ['24', '47', '40'], a: 1, e: { ar: 'نهار قبل كان النص.', fr: 'La veille.', en: 'The day before.' } },
+  { q: { ar: 'سارة قالت: «الناجحين كيفيقو بكري، إذن الفيقان بكري كيجيب النجاح». شنو الخطأ؟', fr: "« Les gens qui réussissent se lèvent tôt, donc se lever tôt apporte le succès. » Quelle erreur ?", en: '"Successful people wake early, so waking early causes success." What is the flaw?' }, o: [{ ar: 'خلط بين الارتباط والسببية', fr: 'Confond corrélation et causalité', en: 'Confuses correlation with causation' }, { ar: 'لا خطأ', fr: 'Aucune erreur', en: 'No flaw' }, { ar: 'مبالغة فقط', fr: "Simple exagération", en: 'Just exaggeration' }], a: 0, e: { ar: 'شي حاجة كتجي مع حاجة ما كتعنيش أنها هي السبب.', fr: "Deux choses liées ne veut pas dire cause.", en: 'Two things appearing together does not mean one causes the other.' } },
+  { q: { ar: 'السلسلة: 2، 6، 12، 20، ؟', fr: 'Suite : 2, 6, 12, 20, ?', en: 'Sequence: 2, 6, 12, 20, ?' }, o: ['28', '30', '32'], a: 1, e: { ar: 'الفروق: 4، 6، 8، 10 ← 30.', fr: 'Écarts 4, 6, 8, 10 → 30.', en: 'Gaps 4, 6, 8, 10 → 30.' } },
+  { q: { ar: 'خلصتي 100 درهم على فيلم وبان ليك ممل. شنو أحسن قرار؟', fr: "Tu as payé 100 pour un film ennuyeux. Meilleure décision ?", en: 'You paid 100 for a boring movie. Best decision?' }, o: [{ ar: 'نبقى حيت خلصت', fr: 'Rester car j\'ai payé', en: 'Stay because I paid' }, { ar: 'نخرج ونستعمل الوقت فشي حاجة مفيدة', fr: 'Partir et utiliser le temps utilement', en: 'Leave and use the time well' }, { ar: 'نغضب', fr: 'Me fâcher', en: 'Get angry' }], a: 1, e: { ar: 'الفلوس مشات، الوقت لا (مغالطة التكلفة الغارقة).', fr: 'Argent perdu, pas le temps (coût irrécupérable).', en: 'The money is gone, the time is not (sunk cost).' } },
+];
+
+export const PROJECT_STEPS = [
+  { ar: 'حدد الهدف فجملة وحدة', fr: "Définir l'objectif en une phrase", en: 'Define the goal in one sentence' },
+  { ar: 'قلب على 3 مشاريع مشابهة', fr: 'Étudier 3 projets similaires', en: 'Study 3 similar projects' },
+  { ar: 'خطط للنسخة الأولى البسيطة (MVP)', fr: 'Planifier une première version simple (MVP)', en: 'Plan a simple first version (MVP)' },
+  { ar: 'ابني النسخة الأولى', fr: 'Construire la première version', en: 'Build the first version' },
+  { ar: 'جرّبها مع 3 أشخاص', fr: 'La tester avec 3 personnes', en: 'Test it with 3 people' },
+  { ar: 'طلق وجمع الملاحظات', fr: 'Lancer et recueillir les retours', en: 'Launch and collect feedback' },
+];
+
+export const TIPS = [
+  { ar: 'خطوة صغيرة كل نهار كتغلب مجهود كبير مرة وحدة.', fr: 'Un petit pas chaque jour bat un gros effort occasionnel.', en: 'A small step every day beats one big effort.' },
+  { ar: 'الغلط ماشي فشل، هو معلومة.', fr: "L'erreur n'est pas un échec, c'est une information.", en: 'A mistake is not failure, it is information.' },
+  { ar: 'علّم شي حاجة لشي واحد باش تفهمها مزيان.', fr: "Explique à quelqu'un pour mieux comprendre.", en: 'Teach someone to understand it better.' },
+  { ar: 'ابدا قبل ما تكون مستعد.', fr: "Commence avant d'être prêt.", en: 'Start before you feel ready.' },
+  { ar: 'الراحة جزء من التعلم.', fr: 'Le repos fait partie de l\'apprentissage.', en: 'Rest is part of learning.' },
+  { ar: 'الفكرة كتصبح قدرة فاش كتطبقها.', fr: "Une idée devient capacité quand on l'applique.", en: 'An idea becomes a skill when you apply it.' },
+];

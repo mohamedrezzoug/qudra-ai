@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>QUDRA AI – قُدرة</title>
+  <meta name="description" content="QUDRA AI – مساعد ذكي مجاني لتعلم المهارات وتحويل الأفكار إلى إنجازات.">
+  <meta name="theme-color" content="#070a1f">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body data-tab="home">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header id="top">
+    <div class="brand"><span class="mark">✦</span> QUDRA AI <small>قُدرة</small></div>
+    <div class="topr"><span id="topxp" class="xpchip">⭐ 0</span><div id="langs" class="langs"></div></div>
+  </header>
+
+  <main id="view" tabindex="-1"></main>
+
+  <button id="fab" class="fab" type="button">💬</button>
+  <nav id="nav"></nav>
+  <div id="toasts" aria-live="polite"></div>
+  <div id="overlay" hidden></div>
+
+  <noscript><p style="padding:2rem;color:#fff">QUDRA AI needs JavaScript.</p></noscript>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
